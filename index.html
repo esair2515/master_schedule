@@ -235,26 +235,26 @@
                     
                     dailySchedule = [
                         { time: '06:30-15:00', activity: 'School', type: 'school', icon: '🏫' },
-                        { time: `${returnTime}-${decompressEnd}`, activity: 'Decompress & Bathroom', type: 'break', icon: '😌' },
+                        { time: `${returnTime}-${decompressEnd}`, activity: 'Chill & Bathroom', type: 'break', icon: '😌' },
                         { time: `${decompressEnd}-${studyEnd}`, activity: 'Study School Work', type: 'study', icon: '📚' },
                         { time: `${studyEnd}-${mathEnd}`, activity: 'SAT Question Bank (Math)', type: 'sat', icon: '🧮' },
                         { time: `${mathEnd}-${satEnd}`, activity: isPracticeTestDay(d) ? 'SAT Full Practice Test' : 'SAT Reading Practice', type: 'sat', icon: '📝' },
-                        { time: '18:30-19:00', activity: 'Pre-dinner Prep', type: 'break', icon: '🍽️' },
+                        { time: '18:30-19:00', activity: 'Pre-dinner, Chill', type: 'break', icon: '🍽️' },
                         { time: '19:00-20:30', activity: 'Dinner + Chores', type: 'daily', icon: '🍽️' },
                         { time: '20:30-21:30', activity: getWorkoutForDate(d), type: 'workout', icon: '💪' },
-                        { time: '21:30-22:00', activity: 'Shower & Wind Down', type: 'break', icon: '🚿' }
+                        { time: '21:30-22:00', activity: 'Get Ready to Sleep', type: 'break', icon: '🚿' }
                     ];
 
                     if (isSummerInternship) {
                         dailySchedule = [
                             { time: '06:30-15:00', activity: 'School', type: 'school', icon: '🏫' },
-                            { time: `${returnTime}-${decompressEnd}`, activity: 'Decompress & Bathroom', type: 'break', icon: '😌' },
+                            { time: `${returnTime}-${decompressEnd}`, activity: 'Chill & Bathroom', type: 'break', icon: '😌' },
                             { time: `${decompressEnd}-16:00`, activity: 'Quick Study/Homework', type: 'study', icon: '📚' },
                             { time: '16:00-18:45', activity: 'Summer Internship', type: 'internship', icon: '💼' },
-                            { time: '18:45-19:00', activity: 'Transition to Dinner', type: 'break', icon: '🚶' },
+                            { time: '18:45-19:00', activity: 'Pre-dinner, Chill', type: 'break', icon: '🚶' },
                             { time: '19:00-20:30', activity: 'Dinner + Chores', type: 'daily', icon: '🍽️' },
                             { time: '20:30-21:30', activity: getWorkoutForDate(d), type: 'workout', icon: '💪' },
-                            { time: '21:30-22:00', activity: 'Shower & Wind Down', type: 'break', icon: '🚿' }
+                            { time: '21:30-22:00', activity: 'Get Ready to Sleep', type: 'break', icon: '🚿' }
                         ];
                     }
                     
