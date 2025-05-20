@@ -162,10 +162,35 @@
     </div>
 
     <script>
+        // ---- PERSISTENCE LAYER ----
+        const COMPLETED_TASKS_KEY = 'schedule_completed_tasks_v1';
+
+        function loadCompletedTasks() {
+            try {
+                const data = localStorage.getItem(COMPLETED_TASKS_KEY);
+                if (data) {
+                    return new Set(JSON.parse(data));
+                }
+            } catch (e) {
+                // fallback: nothing
+            }
+            return new Set();
+        }
+
+        function saveCompletedTasks() {
+            try {
+                localStorage.setItem(COMPLETED_TASKS_KEY, JSON.stringify(Array.from(completedTasks)));
+            } catch (e) {
+                // fallback: nothing
+            }
+        }
+
+        // ---- END PERSISTENCE LAYER ----
+
         // State management
         let expandedWeeks = new Set([1]);
         let expandedDays = new Set();
-        let completedTasks = new Set();
+        let completedTasks = loadCompletedTasks(); // <-- load here!
 
         // Utility functions
         function convertTo12Hour(time24) {
@@ -351,6 +376,7 @@
             } else {
                 completedTasks.add(taskId);
             }
+            saveCompletedTasks(); // <-- save here!
             renderSchedule();
         }
 
@@ -460,10 +486,11 @@
                                     ? 'w-5 h-5 rounded border-2 bg-green-500 border-green-500 text-white flex items-center justify-center transition-colors' 
                                     : 'w-5 h-5 rounded border-2 border-gray-300 hover:border-gray-400 transition-colors';
                                 
+                                // Attach onclick using a function reference to avoid scope issues
                                 taskDiv.innerHTML = `
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center space-x-2">
-                                            <button onclick="toggleTask('${taskId}')" class="${checkboxClass}">
+                                            <button type="button" onclick="toggleTask('${taskId}')" class="${checkboxClass}">
                                                 ${isCompleted ? '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"></polyline></svg>' : ''}
                                             </button>
                                             <span class="text-lg">${item.icon}</span>
@@ -504,6 +531,9 @@
                 container.appendChild(weekDiv);
             });
         }
+
+        // Make toggleTask globally accessible for inline event handler
+        window.toggleTask = toggleTask;
 
         // Initialize the schedule
         renderSchedule();
