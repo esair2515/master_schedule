@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Master Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for icons */
+        .icon {
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .chevron-right {
+            transform: rotate(0deg);
+            transition: transform 0.2s;
+        }
+        
+        .chevron-down {
+            transform: rotate(90deg);
+            transition: transform 0.2s;
+        }
+        
+        .completed {
+            opacity: 0.6;
+        }
+        
+        .line-through {
+            text-decoration: line-through;
+        }
+
+        /* Ensure all Tailwind colors work properly */
+        .bg-blue-50 { background-color: #eff6ff; }
+        .bg-blue-100 { background-color: #dbeafe; }
+        .text-blue-600 { color: #2563eb; }
+        .text-blue-700 { color: #1d4ed8; }
+        .text-blue-800 { color: #1e40af; }
+        .border-blue-200 { border-color: #bfdbfe; }
+        
+        .bg-purple-50 { background-color: #faf5ff; }
+        .bg-purple-100 { background-color: #e9d5ff; }
+        .text-purple-600 { color: #9333ea; }
+        .text-purple-700 { color: #7c3aed; }
+        .text-purple-800 { color: #6b46c1; }
+        
+        .bg-red-50 { background-color: #fef2f2; }
+        .bg-red-100 { background-color: #fee2e2; }
+        .text-red-600 { color: #dc2626; }
+        .text-red-700 { color: #b91c1c; }
+        .text-red-800 { color: #991b1b; }
+        .border-red-200 { border-color: #fecaca; }
+        
+        .bg-green-100 { background-color: #dcfce7; }
+        .text-green-800 { color: #166534; }
+        .bg-green-500 { background-color: #22c55e; }
+        .border-green-500 { border-color: #22c55e; }
+        
+        .bg-orange-100 { background-color: #ffedd5; }
+        .text-orange-800 { color: #9a3412; }
+        
+        .bg-yellow-100 { background-color: #fef3c7; }
+        .text-yellow-800 { color: #92400e; }
+        
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-gray-100 { background-color: #f3f4f6; }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-700 { color: #374151; }
+        .text-gray-800 { color: #1f2937; }
+        .border-gray-300 { border-color: #d1d5db; }
+        .border-gray-400 { border-color: #9ca3af; }
+        
+        /* Hover states */
+        .hover\:bg-gray-100:hover { background-color: #f3f4f6; }
+        .hover\:bg-gray-50:hover { background-color: #f9fafb; }
+        .hover\:border-gray-400:hover { border-color: #9ca3af; }
+        
+        /* Transitions */
+        .transition-colors { transition-property: color, background-color, border-color; transition-duration: 150ms; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div id="app" class="max-w-6xl mx-auto p-6 bg-white min-h-screen">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Enhanced Master Schedule</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg border">
+                    <div class="flex items-center mb-2">
+                        <svg class="icon text-blue-600 mr-2" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <h3 class="font-semibold text-blue-800">Schedule Overview</h3>
+                    </div>
+                    <p class="text-sm text-blue-700">
+                        May 20 - August 23, 2025<br/>
+                        School ends July 18<br/>
+                        Finals: July 11-18<br/>
+                        Summer Internship: June 16-20
+                    </p>
+                </div>
+                
+                <div class="bg-purple-50 p-4 rounded-lg border">
+                    <div class="flex items-center mb-2">
+                        <svg class="icon text-purple-600 mr-2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="6" x2="12" y2="12"></line>
+                            <line x1="16.24" y1="16.24" x2="12" y2="12"></line>
+                        </svg>
+                        <h3 class="font-semibold text-purple-800">SAT Prep</h3>
+                    </div>
+                    <p class="text-sm text-purple-700">
+                        • Practice test every other day<br/>
+                        • Daily question banks<br/>
+                        • Weekly Desmos tips<br/>
+                        • Reading practice sessions
+                    </p>
+                </div>
+                
+                <div class="bg-red-50 p-4 rounded-lg border">
+                    <div class="flex items-center mb-2">
+                        <svg class="icon text-red-600 mr-2" viewBox="0 0 24 24">
+                            <path d="M6 12H4a2 2 0 01-2-2V8a2 2 0 012-2h2M18 12h2a2 2 0 002-2V8a2 2 0 00-2-2h-2M6 12v6a2 2 0 002 2h8a2 2 0 002-2v-6M6 12h12"></path>
+                        </svg>
+                        <h3 class="font-semibold text-red-800">Workout Plan</h3>
+                    </div>
+                    <p class="text-sm text-red-700">
+                        4-day split rotation:<br/>
+                        Chest+Triceps → Back+Biceps → Legs+Core → Shoulders+Arms → Rest
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Content -->
+        <div id="schedule-container" class="space-y-4">
+            <!-- Content will be generated by JavaScript -->
+        </div>
+
+        <!-- Notes -->
+        <div class="mt-8 p-4 bg-blue-50 rounded-lg border">
+            <h3 class="font-semibold text-blue-800 mb-2">📋 Schedule Notes:</h3>
+            <ul class="text-sm text-blue-700 space-y-1">
+                <li>• School days: Return at 3:00 PM (3:30 PM on Tuesdays)</li>
+                <li>• Always decompress 10-15 minutes after school</li>
+                <li>• Dinner at 7:00 PM, chores until 8:30 PM</li>
+                <li>• Bedtime: 10:00 PM on school nights, 10:30-11:00 PM on weekends</li>
+                <li>• Weekend wake-up: 8:00 AM initially, then 7:00 AM after June 1st</li>
+                <li>• 2 hours internship work daily</li>
+                <li>• Practice tests every other day, question banks daily</li>
+                <li>• 4-day workout rotation with rest days</li>
+                <li>• Click checkboxes to track completed tasks!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let expandedWeeks = new Set([1]);
+        let expandedDays = new Set();
+        let completedTasks = new Set();
+
+        // Utility functions
+        function convertTo12Hour(time24) {
+            if (time24.includes('-')) {
+                const [start, end] = time24.split('-');
+                return `${convertSingleTime(start)}-${convertSingleTime(end)}`;
+            }
+            return convertSingleTime(time24);
+        }
+
+        function convertSingleTime(time) {
+            const [hours, minutes] = time.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+            return `${hour12}:${minutes} ${ampm}`;
+        }
+
+        // Workout rotation
+        const workoutPlan = {
+            'Day 1': 'Chest + Triceps',
+            'Day 2': 'Back + Biceps', 
+            'Day 3': 'Legs + Core',
+            'Day 4': 'Shoulders + Arms',
+            'Rest': 'Rest Day'
+        };
+
+        function getWorkoutForDate(date) {
+            const startDate = new Date('2025-05-20');
+            const diffTime = Math.abs(date - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const cycle = diffDays % 5;
+            
+            if (cycle === 0 || cycle === 4) return workoutPlan['Rest'];
+            return workoutPlan[`Day ${cycle}`];
+        }
+
+        function isPracticeTestDay(date) {
+            const startDate = new Date('2025-05-20');
+            const diffTime = Math.abs(date - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays % 2 === 0;
+        }
+
+        function createDetailedSchedule() {
+            const schedule = {};
+            const startDate = new Date('2025-05-20');
+            const endDate = new Date('2025-08-23');
+            
+            for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+                const dateStr = d.toISOString().split('T')[0];
+                const dayOfWeek = d.getDay();
+                const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                const isSchoolDay = d < new Date('2025-07-18') && !isWeekend;
+                const isFinals = d >= new Date('2025-07-11') && d <= new Date('2025-07-18') && !isWeekend;
+                const isSummerInternship = d >= new Date('2025-06-16') && d <= new Date('2025-06-20') && !isWeekend;
+                
+                let dailySchedule = [];
+                
+                if (isSchoolDay) {
+                    const isEarlyRelease = dayOfWeek === 2;
+                    const returnTime = isEarlyRelease ? '15:30' : '15:00';
+                    const decompressEnd = isEarlyRelease ? '15:45' : '15:15';
+                    const studyEnd = isEarlyRelease ? '16:45' : '16:15';
+                    const mathEnd = isEarlyRelease ? '17:30' : '17:00';
+                    const satEnd = isEarlyRelease ? '18:30' : '18:00';
+                    
+                    dailySchedule = [
+                        { time: '06:30-15:00', activity: 'School', type: 'school', icon: '🏫' },
+                        { time: `${returnTime}-${decompressEnd}`, activity: 'Decompress & Bathroom', type: 'break', icon: '😌' },
+                        { time: `${decompressEnd}-${studyEnd}`, activity: 'Study School Work', type: 'study', icon: '📚' },
+                        { time: `${studyEnd}-${mathEnd}`, activity: 'SAT Question Bank (Math)', type: 'sat', icon: '🧮' },
+                        { time: `${mathEnd}-${satEnd}`, activity: isPracticeTestDay(d) ? 'SAT Full Practice Test' : 'SAT Reading Practice', type: 'sat', icon: '📝' },
+                        { time: '18:30-19:00', activity: 'Pre-dinner Prep', type: 'break', icon: '🍽️' },
+                        { time: '19:00-20:30', activity: 'Dinner + Chores', type: 'daily', icon: '🍽️' },
+                        { time: '20:30-21:30', activity: getWorkoutForDate(d), type: 'workout', icon: '💪' },
+                        { time: '21:30-22:00', activity: 'Shower & Wind Down', type: 'break', icon: '🚿' }
+                    ];
+
+                    if (isSummerInternship) {
+                        dailySchedule = [
+                            { time: '06:30-15:00', activity: 'School', type: 'school', icon: '🏫' },
+                            { time: `${returnTime}-${decompressEnd}`, activity: 'Decompress & Bathroom', type: 'break', icon: '😌' },
+                            { time: `${decompressEnd}-16:00`, activity: 'Quick Study/Homework', type: 'study', icon: '📚' },
+                            { time: '16:00-18:45', activity: 'Summer Internship', type: 'internship', icon: '💼' },
+                            { time: '18:45-19:00', activity: 'Transition to Dinner', type: 'break', icon: '🚶' },
+                            { time: '19:00-20:30', activity: 'Dinner + Chores', type: 'daily', icon: '🍽️' },
+                            { time: '20:30-21:30', activity: getWorkoutForDate(d), type: 'workout', icon: '💪' },
+                            { time: '21:30-22:00', activity: 'Shower & Wind Down', type: 'break', icon: '🚿' }
+                        ];
+                    }
+                    
+                    if (isFinals) {
+                        dailySchedule[2] = { time: `${decompressEnd}-${satEnd}`, activity: 'Finals Study (Priority)', type: 'study', icon: '📖' };
+                        dailySchedule[3] = { time: `${satEnd}-18:30`, activity: 'SAT Light Review', type: 'sat', icon: '📝' };
+                        dailySchedule.splice(4, 1);
+                    }
+                } else {
+                    const wakeTime = d < new Date('2025-06-01') ? '08:00' : '07:00';
+                    const breakfastEnd = wakeTime === '08:00' ? '08:15' : '07:15';
+                    const internshipEnd = wakeTime === '08:00' ? '10:15' : '09:15';
+                    const satEnd = wakeTime === '08:00' ? '11:45' : '10:45';
+                    const workoutEnd = wakeTime === '08:00' ? '12:45' : '11:45';
+                    const showerEnd = wakeTime === '08:00' ? '13:00' : '12:00';
+                    
+                    dailySchedule = [
+                        { time: `${wakeTime}-${breakfastEnd}`, activity: 'Wake Up + Breakfast', type: 'daily', icon: '🌅' },
+                        { time: `${breakfastEnd}-${internshipEnd}`, activity: 'Internship Work (2 hours)', type: 'internship', icon: '💼' },
+                        { time: `${internshipEnd}-${satEnd}`, activity: 'SAT Question Bank (Math + Reading)', type: 'sat', icon: '📝' },
+                        { time: `${satEnd}-${workoutEnd}`, activity: getWorkoutForDate(d), type: 'workout', icon: '💪' },
+                        { time: `${workoutEnd}-${showerEnd}`, activity: 'Shower', type: 'break', icon: '🚿' },
+                        { time: '13:00-14:00', activity: 'Free Time', type: 'break', icon: '😎' },
+                        { time: '14:00-15:00', activity: 'Lunch', type: 'daily', icon: '🥪' },
+                        { time: '15:00-17:00', activity: isPracticeTestDay(d) ? 'SAT Full Practice Test' : 'SAT Review + Desmos Tips', type: 'sat', icon: '📊' },
+                        { time: '17:00-19:00', activity: 'Free Time / Relax', type: 'break', icon: '🎮' },
+                        { time: '19:00-20:30', activity: 'Dinner + Family Time', type: 'daily', icon: '🍽️' },
+                        { time: '20:30-22:00', activity: 'Free Time', type: 'break', icon: '📺' },
+                        { time: '22:00-22:30', activity: 'Wind Down', type: 'break', icon: '📖' }
+                    ];
+                }
+                
+                schedule[dateStr] = {
+                    date: d.toDateString(),
+                    dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek],
+                    isWeekend,
+                    isSchoolDay,
+                    isFinals,
+                    isSummerInternship,
+                    workout: getWorkoutForDate(d),
+                    practiceTest: isPracticeTestDay(d),
+                    schedule: dailySchedule
+                };
+            }
+            
+            return schedule;
+        }
+
+        function getTypeColor(type) {
+            const colors = {
+                school: 'bg-blue-100 text-blue-800',
+                study: 'bg-green-100 text-green-800',
+                sat: 'bg-purple-100 text-purple-800',
+                workout: 'bg-red-100 text-red-800',
+                internship: 'bg-orange-100 text-orange-800',
+                daily: 'bg-gray-100 text-gray-800',
+                break: 'bg-yellow-100 text-yellow-800'
+            };
+            return colors[type] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getWorkoutDetails(workout) {
+            const details = {
+                'Chest + Triceps': 'Push-Ups (4×max) • Slow Negative Push-Ups (3×8) • Dips (4×10-12) • DB Floor Press (3×12-15) • DB Tricep Extension (3×12-15) • Diamond Push-Ups (3×burnout)',
+                'Back + Biceps': 'Towel Rows (4×10) • Backpack Rows (4×12) • DB Bicep Curls (3×15-20) • Isometric Hold (3×20s) • Reverse Angels (3×15) • Doorframe Pulls (3×12)',
+                'Legs + Core': 'Squats (4×15-20) • Bulgarian Split Squats (3×10/leg) • Wall Sits (3×45s) • Calf Raises (4×20) • Plank (3×60s) • Leg Raises (3×15) • Russian Twists (3×20)',
+                'Shoulders + Arms': 'Pike Push-Ups (3×10-15) • DB Lateral Raises (3×15) • Front Raises (3×15) • Backpack Overhead Press (4×10-12) • DB Curls (3×12) • Chair Dips (3×15)'
+            };
+            return details[workout] || '';
+        }
+
+        // Event handlers
+        function toggleWeek(weekIndex) {
+            if (expandedWeeks.has(weekIndex)) {
+                expandedWeeks.delete(weekIndex);
+            } else {
+                expandedWeeks.add(weekIndex);
+            }
+            renderSchedule();
+        }
+
+        function toggleDay(dayKey) {
+            if (expandedDays.has(dayKey)) {
+                expandedDays.delete(dayKey);
+            } else {
+                expandedDays.add(dayKey);
+            }
+            renderSchedule();
+        }
+
+        function toggleTask(taskId) {
+            if (completedTasks.has(taskId)) {
+                completedTasks.delete(taskId);
+            } else {
+                completedTasks.add(taskId);
+            }
+            renderSchedule();
+        }
+
+        // Render function
+        function renderSchedule() {
+            const schedule = createDetailedSchedule();
+            const dates = Object.keys(schedule).sort();
+            
+            // Group by weeks
+            const weeks = [];
+            let currentWeek = [];
+            
+            dates.forEach((date, index) => {
+                const dayOfWeek = new Date(date).getDay();
+                
+                if (index === 0 || (dayOfWeek === 1 && currentWeek.length > 0)) {
+                    if (currentWeek.length > 0) {
+                        weeks.push([...currentWeek]);
+                        currentWeek = [];
+                    }
+                }
+                
+                currentWeek.push(date);
+                
+                if (index === dates.length - 1) {
+                    weeks.push([...currentWeek]);
+                }
+            });
+
+            const container = document.getElementById('schedule-container');
+            container.innerHTML = '';
+
+            weeks.forEach((week, weekIndex) => {
+                const weekDiv = document.createElement('div');
+                weekDiv.className = 'border rounded-lg overflow-hidden';
+                
+                const weekHeader = document.createElement('button');
+                weekHeader.className = 'w-full px-4 py-3 bg-gray-50 hover:bg-gray-100 flex items-center justify-between transition-colors';
+                weekHeader.onclick = () => toggleWeek(weekIndex + 1);
+                
+                const isExpanded = expandedWeeks.has(weekIndex + 1);
+                weekHeader.innerHTML = `
+                    <span class="font-semibold text-gray-800">
+                        Week ${weekIndex + 1} (${schedule[week[0]].date} - ${schedule[week[week.length - 1]].date})
+                    </span>
+                    <svg class="icon text-gray-600 ${isExpanded ? 'chevron-down' : 'chevron-right'}" viewBox="0 0 24 24">
+                        <polyline points="9,18 15,12 9,6"></polyline>
+                    </svg>
+                `;
+                
+                weekDiv.appendChild(weekHeader);
+                
+                if (isExpanded) {
+                    const weekContent = document.createElement('div');
+                    weekContent.className = 'p-4 space-y-3';
+                    
+                    week.forEach(date => {
+                        const day = schedule[date];
+                        const dayKey = `${weekIndex}-${date}`;
+                        
+                        const dayDiv = document.createElement('div');
+                        dayDiv.className = 'border rounded-lg overflow-hidden';
+                        
+                        const dayHeader = document.createElement('button');
+                        dayHeader.className = 'w-full px-3 py-2 bg-white hover:bg-gray-50 flex items-center justify-between transition-colors border-b';
+                        dayHeader.onclick = () => toggleDay(dayKey);
+                        
+                        const isDayExpanded = expandedDays.has(dayKey);
+                        
+                        let badges = '';
+                        if (day.isSchoolDay) badges += '<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">School</span>';
+                        if (day.isFinals) badges += '<span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">Finals</span>';
+                        if (day.isSummerInternship) badges += '<span class="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">Internship</span>';
+                        if (day.practiceTest) badges += '<span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">Practice Test</span>';
+                        
+                        dayHeader.innerHTML = `
+                            <div class="flex items-center space-x-3">
+                                <span class="font-medium text-gray-800">
+                                    ${day.dayOfWeek} - ${new Date(date).toLocaleDateString()}
+                                </span>
+                                <div class="flex space-x-2">
+                                    ${badges}
+                                </div>
+                            </div>
+                            <svg class="icon text-gray-600 ${isDayExpanded ? 'chevron-down' : 'chevron-right'}" viewBox="0 0 24 24">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        `;
+                        
+                        dayDiv.appendChild(dayHeader);
+                        
+                        if (isDayExpanded) {
+                            const dayContent = document.createElement('div');
+                            dayContent.className = 'p-3 bg-gray-50';
+                            
+                            const scheduleGrid = document.createElement('div');
+                            scheduleGrid.className = 'grid gap-2';
+                            
+                            day.schedule.forEach((item, index) => {
+                                const taskId = `${date}-${index}`;
+                                const isCompleted = completedTasks.has(taskId);
+                                
+                                const taskDiv = document.createElement('div');
+                                taskDiv.className = `p-3 rounded-lg border ${getTypeColor(item.type)} ${isCompleted ? 'completed' : ''}`;
+                                
+                                const checkboxClass = isCompleted 
+                                    ? 'w-5 h-5 rounded border-2 bg-green-500 border-green-500 text-white flex items-center justify-center transition-colors' 
+                                    : 'w-5 h-5 rounded border-2 border-gray-300 hover:border-gray-400 transition-colors';
+                                
+                                taskDiv.innerHTML = `
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2">
+                                            <button onclick="toggleTask('${taskId}')" class="${checkboxClass}">
+                                                ${isCompleted ? '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20,6 9,17 4,12"></polyline></svg>' : ''}
+                                            </button>
+                                            <span class="text-lg">${item.icon}</span>
+                                            <span class="font-medium">${convertTo12Hour(item.time)}</span>
+                                        </div>
+                                        <span class="text-sm font-semibold ${isCompleted ? 'line-through' : ''}">
+                                            ${item.activity}
+                                        </span>
+                                    </div>
+                                `;
+                                
+                                scheduleGrid.appendChild(taskDiv);
+                            });
+                            
+                            dayContent.appendChild(scheduleGrid);
+                            
+                            if (day.workout !== 'Rest Day') {
+                                const workoutDiv = document.createElement('div');
+                                workoutDiv.className = 'mt-3 p-3 bg-red-50 rounded-lg border border-red-200';
+                                workoutDiv.innerHTML = `
+                                    <h4 class="font-semibold text-red-800 mb-2">💪 Today's Workout: ${day.workout}</h4>
+                                    <div class="text-sm text-red-700">
+                                        ${getWorkoutDetails(day.workout)}
+                                    </div>
+                                `;
+                                dayContent.appendChild(workoutDiv);
+                            }
+                            
+                            dayDiv.appendChild(dayContent);
+                        }
+                        
+                        weekContent.appendChild(dayDiv);
+                    });
+                    
+                    weekDiv.appendChild(weekContent);
+                }
+                
+                container.appendChild(weekDiv);
+            });
+        }
+
+        // Initialize the schedule
+        renderSchedule();
+    </script>
+</body>
+</html>
