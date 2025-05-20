@@ -1,0 +1,61 @@
+/* styles.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+  margin: 0;
+  padding: 2rem;
+}
+
+.schedule {
+  max-width: 800px;
+  margin: auto;
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.week,
+.day {
+  margin-bottom: 1rem;
+}
+
+.toggle-week,
+.toggle-day {
+  display: block;
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tasks {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.task {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.task input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
