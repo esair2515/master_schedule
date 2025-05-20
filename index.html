@@ -166,11 +166,7 @@
         let expandedWeeks = new Set([1]);
         let expandedDays = new Set();
         let completedTasks = new Set();
-// Load saved states when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  loadCheckboxStates();
-  renderSchedule();
-});
+
         // Utility functions
         function convertTo12Hour(time24) {
             if (time24.includes('-')) {
@@ -349,15 +345,14 @@ document.addEventListener('DOMContentLoaded', function() {
             renderSchedule();
         }
 
-function toggleTask(taskId) {
-  if (completedTasks.has(taskId)) {
-    completedTasks.delete(taskId);
-  } else {
-    completedTasks.add(taskId);
-  }
-  saveCheckboxStates();
-  renderSchedule();
-}
+        function toggleTask(taskId) {
+            if (completedTasks.has(taskId)) {
+                completedTasks.delete(taskId);
+            } else {
+                completedTasks.add(taskId);
+            }
+            renderSchedule();
+        }
 
         // Render function
         function renderSchedule() {
@@ -512,21 +507,6 @@ function toggleTask(taskId) {
 
         // Initialize the schedule
         renderSchedule();
-function saveCheckboxStates() {
-  const states = {};
-  completedTasks.forEach(taskId => {
-    states[taskId] = true;
-  });
-  localStorage.setItem('completedTasks', JSON.stringify(states));
-}
-function loadCheckboxStates() {
-  const savedStates = localStorage.getItem('completedTasks');
-  if (savedStates) {
-    const states = JSON.parse(savedStates);
-    completedTasks = new Set(Object.keys(states));
-  }
-}
-
     </script>
 </body>
 </html>
